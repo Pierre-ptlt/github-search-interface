@@ -1,8 +1,12 @@
 .repo__list {
+  display: grid;
+  grid-template-columns: (2, 1fr);
+  max-width: 100%;
+  gap: 2rem;
+}
+
+.repo__list__wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 0 -10px;
-  border: solid red 2px;
-  max-width: 100%;
+  gap: 20px;
 }

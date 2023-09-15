@@ -21,7 +21,6 @@ const RepoList: React.FC<RepoListProps> = (props) => {
 
   return (
     <div className="repo__list">
-      <h2>Résultats de la recherche</h2>
       <div className="repo__list__wrapper">
         {props.repos.map((repo) => (
           <Repoitem

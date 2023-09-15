@@ -36,7 +36,7 @@ const Home: React.FC = () => {
 
   const debounceFetchResults = useCallback(
     debounce((query, page) => fetchResults(query, page), 1000),
-    [],
+    [fetchResults],
   );
 
   const handlePageChange = (page: number) => {
@@ -55,6 +55,7 @@ const Home: React.FC = () => {
           onChange={handleSearchChange}
           value={searchValue}
         />
+        <h2>Résultats de la recherche</h2>
         <RepoList
           repos={searchResults}
           currentPage={currentPage}
