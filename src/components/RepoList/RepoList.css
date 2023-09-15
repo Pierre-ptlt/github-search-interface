@@ -1,0 +1,8 @@
+.repo__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -10px;
+  border: solid red 2px;
+  max-width: 100%;
+}

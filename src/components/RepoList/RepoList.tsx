@@ -1,11 +1,49 @@
-import React from 'react'
+import React from "react";
+import "./RepoList.css";
+import Repoitem from "../RepoItem/Repoitem";
+import { Pagination } from "@mui/material";
 
-const RepoList = () => {
-  return (
-    <div>
-      liste des repos
-    </div>
-  )
+interface RepoListProps {
+  repos: any[];
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  onAddToFavorites: (repo: any) => void;
 }
 
-export default RepoList
+const RepoList: React.FC<RepoListProps> = (props) => {
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number,
+  ) => {
+    props.onPageChange(page);
+  };
+
+  return (
+    <div className="repo__list">
+      <h2>Résultats de la recherche</h2>
+      <div className="repo__list__wrapper">
+        {props.repos.map((repo) => (
+          <Repoitem
+            key={repo.id}
+            repo={repo}
+            onAddToFavorites={props.onAddToFavorites}
+          />
+        ))}
+      </div>
+      {props.repos.length > 0 ? (
+        <div className="pagination__wrapper">
+          <Pagination
+            count={props.totalPages}
+            page={props.currentPage}
+            onChange={handlePageChange}
+            variant="outlined"
+            shape="rounded"
+          />
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+export default RepoList;

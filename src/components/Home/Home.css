@@ -1,0 +1,22 @@
+.home__wrapper {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.search__result__wrapper {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  max-width: 66.66%;
+}
+
+.favorites__wrapper {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-left: 1px solid #546eef;
+  max-width: 33.33%;
+}
