@@ -1,0 +1,13 @@
+.home__wrapper {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin: auto;
+}
+
+.search__result__wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  flex: 2;
+}

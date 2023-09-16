@@ -1,0 +1,11 @@
+.repo__list {
+  max-width: 100%;
+  gap: 2rem;
+}
+
+.repo__list__wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}

@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const FavoriteList = () => {
-  return (
-    <div>
-      Favoris
-    </div>
-  )
+interface FavoriteListProps {
+  /* repos: any[]; */
 }
 
-export default FavoriteList
+const FavoriteList: React.FC<FavoriteListProps> = (props) => {
+  return <div>Favoris</div>;
+};
+
+export default FavoriteList;
