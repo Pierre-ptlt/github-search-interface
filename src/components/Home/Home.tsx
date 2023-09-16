@@ -1,13 +1,22 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import "./Home.css";
+import AppContext from "../../contexts/AppContext";
 import RepoList from "../RepoList/RepoList";
 import SearchInput from "../SearchInput/SearchInput";
 import axios from "axios";
 import { debounce } from "lodash";
 
 const Home: React.FC = () => {
+  const context = useContext(AppContext);
+
+  if (!context) {
+    throw new Error(
+      "Le composant doit être utilisé à l'intérieur du AppProvider",
+    );
+  }
+
   const [searchValue, setSearchValue] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const { setSearchResults } = context;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -35,7 +44,7 @@ const Home: React.FC = () => {
   const debounceFetchResults = useRef(
     debounce(
       (value: string, page: number) => fetchResults(value, page),
-      600,
+      300,
     ),
   );
 
@@ -53,7 +62,6 @@ const Home: React.FC = () => {
         />
         <h2>Résultats de la recherche</h2>
         <RepoList
-          repos={searchResults}
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}

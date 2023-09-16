@@ -7,17 +7,20 @@ import {
   Route,
 } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
+import { AppProvider } from "./contexts/AppContext";
 
 const App: React.FC = () => {
   return (
     <div>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="favoris" element={<FavoriteList />} />
-        </Routes>
-      </Router>
+      <AppProvider>
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="favoris" element={<FavoriteList />} />
+          </Routes>
+        </Router>
+      </AppProvider>
     </div>
   );
 };
