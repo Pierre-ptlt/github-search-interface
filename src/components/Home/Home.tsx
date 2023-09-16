@@ -33,7 +33,6 @@ const Home: React.FC = () => {
       const response = await axios.get(
         `https://api.github.com/search/repositories?q=${searchValue}&page=${page}`,
       );
-      console.log(response);
       setSearchResults(response.data.items);
       setTotalPages(Math.ceil(response.data.total_count / 30));
     } catch (error) {

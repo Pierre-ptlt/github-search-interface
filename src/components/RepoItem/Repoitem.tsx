@@ -1,12 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import "./Repoitem.css";
 import { Button, Card, CardContent, Typography } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import Star from "@mui/icons-material/Star";
+import AppContext from "../../contexts/AppContext";
 
 interface RepoitemProps {
   repo: any;
 }
 
 const Repoitem: React.FC<RepoitemProps> = (props) => {
+  const context = useContext(AppContext);
+
+  if (!context) {
+    throw new Error(
+      "Le composant doit être utilisé à l'intérieur du AppProvider",
+    );
+  }
+
+  const { favorites, addFavorite, removeFavorite } = context;
+
+  const isFavorite = favorites.some(
+    (fav) => fav.id === props.repo.id,
+  );
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      removeFavorite(props.repo.id);
+    } else {
+      addFavorite(props.repo);
+    }
+  };
+
   return (
     <Card className="repo-item">
       <CardContent className="repo-item__content">
@@ -48,6 +74,23 @@ const Repoitem: React.FC<RepoitemProps> = (props) => {
         >
           Voir le projet
         </Button>
+        <IconButton
+          className="icon__button"
+          onClick={handleToggleFavorite}
+          color="primary"
+        >
+          {isFavorite ? (
+            <div className="favorite__wrapper">
+              Retirer des favoris
+              <Star />
+            </div>
+          ) : (
+            <div className="favorite__wrapper">
+              Ajouter aux favoris
+              <StarBorderIcon />
+            </div>
+          )}
+        </IconButton>
       </CardContent>
     </Card>
   );

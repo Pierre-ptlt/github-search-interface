@@ -56,3 +56,16 @@ Button {
 Button:hover {
   background-color: #005bb5;
 }
+
+.icon__button {
+  outline: none !important;
+}
+
+.favorite__wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  font-size: medium;
+}
