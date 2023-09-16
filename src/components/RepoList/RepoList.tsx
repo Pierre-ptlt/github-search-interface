@@ -8,7 +8,6 @@ interface RepoListProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-  onAddToFavorites: (repo: any) => void;
 }
 
 const RepoList: React.FC<RepoListProps> = (props) => {
@@ -23,11 +22,7 @@ const RepoList: React.FC<RepoListProps> = (props) => {
     <div className="repo__list">
       <div className="repo__list__wrapper">
         {props.repos.map((repo) => (
-          <Repoitem
-            key={repo.id}
-            repo={repo}
-            onAddToFavorites={props.onAddToFavorites}
-          />
+          <Repoitem key={repo.id} repo={repo} />
         ))}
       </div>
       {props.repos.length > 0 ? (

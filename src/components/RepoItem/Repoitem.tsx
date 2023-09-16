@@ -4,14 +4,9 @@ import { Button, Card, CardContent, Typography } from "@mui/material";
 
 interface RepoitemProps {
   repo: any;
-  onAddToFavorites: (repo: any) => void;
 }
 
 const Repoitem: React.FC<RepoitemProps> = (props) => {
-  useEffect(() => {
-    console.log(props.repo);
-  }, [props]);
-
   return (
     <Card className="repo-item">
       <CardContent className="repo-item__content">

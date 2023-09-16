@@ -1,16 +1,11 @@
 import React from "react";
 
 interface FavoriteListProps {
-  repos: any[];
+  /* repos: any[]; */
 }
 
 const FavoriteList: React.FC<FavoriteListProps> = (props) => {
-  return (
-    <div>
-      Favoris
-      {props.repos}
-    </div>
-  );
+  return <div>Favoris</div>;
 };
 
 export default FavoriteList;

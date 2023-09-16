@@ -2,21 +2,12 @@
   display: flex;
   justify-content: center;
   height: 100vh;
+  margin: auto;
 }
 
 .search__result__wrapper {
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
+  max-width: 100%;
   flex: 2;
-  max-width: 75%;
-}
-
-.favorites__wrapper {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  border-left: 1px solid #546eef;
-  max-width: 25%;
 }

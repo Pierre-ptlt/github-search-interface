@@ -9,7 +9,7 @@ interface SearchInputProps {
 
 const SearchInput: React.FC<SearchInputProps> = (props) => {
   return (
-    <div>
+    <div className="search__input__wrapper">
       <TextField
         className="search__input"
         type="text"

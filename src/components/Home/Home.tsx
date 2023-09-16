@@ -1,15 +1,13 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./Home.css";
 import RepoList from "../RepoList/RepoList";
-import FavoriteList from "../FavoriteList/FavoriteList";
 import SearchInput from "../SearchInput/SearchInput";
 import axios from "axios";
-import { debounce } from "@mui/material/utils";
+import { debounce } from "lodash";
 
 const Home: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [favorites, setFavorites] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -18,7 +16,7 @@ const Home: React.FC = () => {
   ) => {
     const value = e.target.value;
     setSearchValue(value);
-    debounceFetchResults(value, currentPage);
+    debounceFetchResults.current(value, currentPage);
   };
 
   const fetchResults = async (searchValue: string, page: number) => {
@@ -26,7 +24,7 @@ const Home: React.FC = () => {
       const response = await axios.get(
         `https://api.github.com/search/repositories?q=${searchValue}&page=${page}`,
       );
-
+      console.log(response);
       setSearchResults(response.data.items);
       setTotalPages(Math.ceil(response.data.total_count / 30));
     } catch (error) {
@@ -34,18 +32,16 @@ const Home: React.FC = () => {
     }
   };
 
-  const debounceFetchResults = useCallback(
-    debounce((query, page) => fetchResults(query, page), 1000),
-    [fetchResults],
+  const debounceFetchResults = useRef(
+    debounce(
+      (value: string, page: number) => fetchResults(value, page),
+      600,
+    ),
   );
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    fetchResults(searchValue, page);
-  };
-
-  const handleAddToFavorites = (repo: any) => {
-    console.log(repo);
+    debounceFetchResults.current(searchValue, page);
   };
 
   return (
@@ -61,11 +57,7 @@ const Home: React.FC = () => {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
-          onAddToFavorites={handleAddToFavorites}
         />
-      </div>
-      <div className="favorites__wrapper">
-        <FavoriteList repos={favorites} />
       </div>
     </div>
   );
