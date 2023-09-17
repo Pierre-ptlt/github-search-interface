@@ -4,10 +4,15 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import Star from "@mui/icons-material/Star";
 import "./StarRating.css";
 
-const StarRating: React.FC<{
+interface StarRatingProps {
   currentRating: number;
   onRate: (rating: number) => void;
-}> = ({ currentRating, onRate }) => {
+}
+
+const StarRating: React.FC<StarRatingProps> = ({
+  currentRating,
+  onRate,
+}) => {
   return (
     <div>
       {[1, 2, 3, 4, 5].map((rating) => (
