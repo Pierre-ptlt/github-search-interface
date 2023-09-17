@@ -28,14 +28,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({
 
   const addFavorite = (repo: any) => {
     setFavorites((prevFavorites) => [...prevFavorites, repo]);
-    console.log(favorites);
   };
 
   const removeFavorite = (id: number) => {
     setFavorites((prevFavorites) =>
       prevFavorites.filter((favorite) => favorite.id !== id),
     );
-    console.log(favorites);
   };
 
   return (
