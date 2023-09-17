@@ -32,7 +32,9 @@ const Home: React.FC = () => {
   const fetchResults = async (searchValue: string, page: number) => {
     try {
       const response = await axios.get(
-        `https://api.github.com/search/repositories?q=${searchValue}&page=${page}`,
+        `${
+          import.meta.env.VITE_GITHUB_REPO_API
+        }?q=${searchValue}&page=${page}`,
       );
       setSearchResults(response.data.items);
       setTotalPages(Math.ceil(response.data.total_count / 30));

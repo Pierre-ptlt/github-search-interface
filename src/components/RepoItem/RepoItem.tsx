@@ -1,19 +1,30 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import "./RepoItem.css";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import StarRating from "../StarRating/StarRating";
 import AppContext from "../../contexts/AppContext";
+import { Repo } from "../../types";
+import StarRating from "../StarRating/StarRating";
 
-interface RepoitemProps {
-  repo: any;
+interface RepoItemProps {
+  repo: Repo;
   isFavoritePage: boolean;
 }
 
-const RepoItem: React.FC<RepoitemProps> = (props) => {
+const RepoItem = ({ repo, isFavoritePage }: RepoItemProps) => {
   const context = useContext(AppContext);
+  const {
+    name,
+    owner,
+    description,
+    stargazers_count,
+    visibility,
+    language,
+    html_url,
+    id: repoId,
+  } = repo;
 
   if (!context) {
     throw new Error(
@@ -29,24 +40,24 @@ const RepoItem: React.FC<RepoitemProps> = (props) => {
   } = context;
 
   const favoriteRepo = favorites.find(
-    (fav) => fav.id === props.repo.id,
+    ({ id: favId }) => favId === repoId,
   );
   const currentRating = favoriteRepo ? favoriteRepo.rating : 0;
 
   const isFavorite = favorites.some(
-    (fav) => fav.id === props.repo.id,
+    ({ id: favId }) => favId === repoId,
   );
 
   const handleToggleFavorite = () => {
     if (isFavorite) {
-      removeFavorite(props.repo.id);
+      removeFavorite(repoId);
     } else {
-      addFavorite(props.repo);
+      addFavorite(repo);
     }
   };
 
   const handleSetFavoriteRating = (rating: number) => {
-    setFavoriteRating(props.repo.id, rating);
+    setFavoriteRating(repoId, rating);
   };
 
   return (
@@ -57,34 +68,34 @@ const RepoItem: React.FC<RepoitemProps> = (props) => {
           variant="h5"
           component="div"
         >
-          {props.repo.name}
+          {name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Auteur: {props.repo.owner.login}
+          Auteur: {owner.login}
         </Typography>
         <Typography
           className="repo-item__description"
           variant="body2"
         >
-          {props.repo.description}
+          {description}
         </Typography>
         <div className="item__details">
           <Typography variant="body2">
-            Etoiles: {props.repo.stargazers_count}
+            Etoiles: {stargazers_count}
           </Typography>
           <Typography variant="body2">
-            Visibilité: {props.repo.visibility}
+            Visibilité: {visibility}
           </Typography>
-          {props.repo.language ? (
+          {language ? (
             <Typography variant="body2">
-              Langage: {props.repo.language}
+              Langage: {language}
             </Typography>
           ) : null}
         </div>
         <Button
           variant="contained"
           component="a"
-          href={props.repo.html_url}
+          href={html_url}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -107,7 +118,7 @@ const RepoItem: React.FC<RepoitemProps> = (props) => {
             </div>
           )}
         </IconButton>
-        {props.isFavoritePage && (
+        {isFavoritePage && (
           <div>
             <div className="my__rating">
               <Typography variant="body2">Ma note: </Typography>
