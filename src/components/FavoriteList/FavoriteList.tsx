@@ -1,4 +1,5 @@
 import React from "react";
+import "./FavoriteList.css";
 import AppContext from "../../contexts/AppContext";
 import RepoItem from "../RepoItem/Repoitem";
 
@@ -14,12 +15,12 @@ const FavoriteList: React.FC = () => {
   const { favorites, removeFavorite } = context;
 
   return (
-    <div className="favorites__wrapper">
+    <div className="favorites__list">
       <h2 className="favorites__title">Mes favoris</h2>
       {favorites.length === 0 ? (
         <p className="favorites__empty">Aucun favori</p>
       ) : (
-        <div className="favorite__list">
+        <div className="favorite__list__wrapper">
           {favorites.map((repo) => (
             <RepoItem key={repo.id} repo={repo} />
           ))}
