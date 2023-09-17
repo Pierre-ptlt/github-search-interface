@@ -1,10 +1,11 @@
 import React, { useState, useRef, useContext } from "react";
-import "./Home.css";
+import axios from "axios";
+import { debounce } from "lodash";
+
 import AppContext from "../../contexts/AppContext";
 import RepoList from "../RepoList/RepoList";
 import SearchInput from "../SearchInput/SearchInput";
-import axios from "axios";
-import { debounce } from "lodash";
+import "./Home.css";
 
 const Home: React.FC = () => {
   const context = useContext(AppContext);
@@ -16,11 +17,11 @@ const Home: React.FC = () => {
   }
 
   const [searchValue, setSearchValue] = useState("");
-  const { setSearchResults } = context;
+  const { searchResults, setSearchResults } = context;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const handleSearchChange = (
+  const onSearchInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const value = e.target.value;
@@ -33,7 +34,6 @@ const Home: React.FC = () => {
       const response = await axios.get(
         `https://api.github.com/search/repositories?q=${searchValue}&page=${page}`,
       );
-      console.log(response);
       setSearchResults(response.data.items);
       setTotalPages(Math.ceil(response.data.total_count / 30));
     } catch (error) {
@@ -57,15 +57,23 @@ const Home: React.FC = () => {
     <div className="home__wrapper">
       <div className="search__result__wrapper">
         <SearchInput
-          onChange={handleSearchChange}
+          onChange={onSearchInputChange}
           value={searchValue}
         />
         <h2>Résultats de la recherche</h2>
-        <RepoList
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+        {searchValue && searchResults.length > 0 ? (
+          <RepoList
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        ) : searchValue && searchResults.length === 0 ? (
+          <p>Aucun résultat pour cette recherche</p>
+        ) : (
+          <p>
+            Veuillez entrer le nom d'un repository présent sur Github
+          </p>
+        )}
       </div>
     </div>
   );

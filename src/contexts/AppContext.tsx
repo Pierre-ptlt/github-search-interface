@@ -1,3 +1,4 @@
+import { fabClasses } from "@mui/material";
 import React, { useState, createContext } from "react";
 
 type AppContextType = {
@@ -5,6 +6,8 @@ type AppContextType = {
   setSearchResults: React.Dispatch<React.SetStateAction<any[]>>;
   favorites: any[];
   setFavorites: React.Dispatch<React.SetStateAction<any[]>>;
+  addFavorite: (repo: any) => void;
+  removeFavorite: (id: number) => void;
 };
 
 type AppProviderProps = {
@@ -23,6 +26,18 @@ export const AppProvider: React.FC<AppProviderProps> = ({
   const [searchResults, setSearchResults] = React.useState<any[]>([]);
   const [favorites, setFavorites] = React.useState<any[]>([]);
 
+  const addFavorite = (repo: any) => {
+    setFavorites((prevFavorites) => [...prevFavorites, repo]);
+    console.log(favorites);
+  };
+
+  const removeFavorite = (id: number) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.filter((favorite) => favorite.id !== id),
+    );
+    console.log(favorites);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -30,6 +45,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({
         setSearchResults,
         favorites,
         setFavorites,
+        addFavorite,
+        removeFavorite,
       }}
     >
       {children}

@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./NavBar.css";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+
+import "./NavBar.css";
 
 const NavBar: React.FC = () => {
   return (
     <div className="navBar">
-      <AppBar position="static" style={{ borderRadius: "10px" }}>
+      <AppBar className="app__bar" position="static">
         <Toolbar>
           <Typography
             style={{ marginLeft: "7%" }}
