@@ -69,3 +69,9 @@ Button:hover {
   padding: 10px;
   font-size: medium;
 }
+
+.my__rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -61,18 +61,17 @@ const Home: React.FC = () => {
           value={searchValue}
         />
         <h2>Résultats de la recherche</h2>
-        {searchValue && searchResults.length > 0 ? (
+        {searchResults.length > 0 ? (
           <RepoList
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
           />
-        ) : searchValue && searchResults.length === 0 ? (
-          <p>Aucun résultat pour cette recherche</p>
         ) : (
-          <p>
-            Veuillez entrer le nom d'un repository présent sur Github
-          </p>
+          searchValue &&
+          searchResults.length === 0 && (
+            <p>Aucun résultat pour cette recherche</p>
+          )
         )}
       </div>
     </div>
