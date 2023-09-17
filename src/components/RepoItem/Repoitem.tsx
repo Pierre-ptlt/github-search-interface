@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
-import "./Repoitem.css";
+import "./RepoItem.css";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import Star from "@mui/icons-material/Star";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import StarRating from "../StarRating/StarRating";
 import AppContext from "../../contexts/AppContext";
 
 interface RepoitemProps {
   repo: any;
+  isFavoritePage: boolean;
 }
 
-const Repoitem: React.FC<RepoitemProps> = (props) => {
+const RepoItem: React.FC<RepoitemProps> = (props) => {
   const context = useContext(AppContext);
 
   if (!context) {
@@ -19,7 +21,17 @@ const Repoitem: React.FC<RepoitemProps> = (props) => {
     );
   }
 
-  const { favorites, addFavorite, removeFavorite } = context;
+  const {
+    favorites,
+    addFavorite,
+    removeFavorite,
+    setFavoriteRating,
+  } = context;
+
+  const favoriteRepo = favorites.find(
+    (fav) => fav.id === props.repo.id,
+  );
+  const currentRating = favoriteRepo ? favoriteRepo.rating : 0;
 
   const isFavorite = favorites.some(
     (fav) => fav.id === props.repo.id,
@@ -31,6 +43,10 @@ const Repoitem: React.FC<RepoitemProps> = (props) => {
     } else {
       addFavorite(props.repo);
     }
+  };
+
+  const handleSetFavoriteRating = (rating: number) => {
+    setFavoriteRating(props.repo.id, rating);
   };
 
   return (
@@ -82,18 +98,32 @@ const Repoitem: React.FC<RepoitemProps> = (props) => {
           {isFavorite ? (
             <div className="favorite__wrapper">
               Retirer des favoris
-              <Star />
+              <FavoriteIcon />
             </div>
           ) : (
             <div className="favorite__wrapper">
               Ajouter aux favoris
-              <StarBorderIcon />
+              <FavoriteBorderIcon />
             </div>
           )}
         </IconButton>
+        {props.isFavoritePage && (
+          <div>
+            <div className="my__rating">
+              <Typography variant="body2">Ma note: </Typography>
+              <StarRating
+                currentRating={currentRating}
+                onRate={handleSetFavoriteRating}
+              />
+            </div>
+            <Typography variant="body2">
+              Note: {currentRating}/5
+            </Typography>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
 };
 
-export default Repoitem;
+export default RepoItem;

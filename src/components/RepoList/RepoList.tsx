@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./RepoList.css";
 import AppContext from "../../contexts/AppContext";
-import Repoitem from "../RepoItem/Repoitem";
+import RepoItem from "../RepoItem/RepoItem";
 import { Pagination } from "@mui/material";
 
 interface RepoListProps {
@@ -32,7 +32,11 @@ const RepoList: React.FC<RepoListProps> = (props) => {
     <div className="repo__list">
       <div className="repo__list__wrapper">
         {repos.map((repo) => (
-          <Repoitem key={repo.id} repo={repo} />
+          <RepoItem
+            isFavoritePage={false}
+            key={repo.id}
+            repo={repo}
+          />
         ))}
       </div>
       {repos.length > 0 ? (

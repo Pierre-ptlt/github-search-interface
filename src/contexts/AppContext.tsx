@@ -8,6 +8,7 @@ type AppContextType = {
   setFavorites: React.Dispatch<React.SetStateAction<any[]>>;
   addFavorite: (repo: any) => void;
   removeFavorite: (id: number) => void;
+  setFavoriteRating: (repoId: number, rating: number) => void;
 };
 
 type AppProviderProps = {
@@ -27,15 +28,28 @@ export const AppProvider: React.FC<AppProviderProps> = ({
   const [favorites, setFavorites] = React.useState<any[]>([]);
 
   const addFavorite = (repo: any) => {
-    setFavorites((prevFavorites) => [...prevFavorites, repo]);
-    console.log(favorites);
+    const newFavorite = {
+      ...repo,
+      rating: 0,
+    };
+    setFavorites((prevFavorites) => [...prevFavorites, newFavorite]);
   };
 
   const removeFavorite = (id: number) => {
     setFavorites((prevFavorites) =>
       prevFavorites.filter((favorite) => favorite.id !== id),
     );
-    console.log(favorites);
+  };
+
+  const setFavoriteRating = (repoId: number, rating: number) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.map((favorite) => {
+        if (favorite.id === repoId) {
+          return { ...favorite, rating };
+        }
+        return favorite;
+      }),
+    );
   };
 
   return (
@@ -47,6 +61,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({
         setFavorites,
         addFavorite,
         removeFavorite,
+        setFavoriteRating,
       }}
     >
       {children}
