@@ -1,6 +1,7 @@
 import React, { useState, useRef, useContext } from "react";
 import axios from "axios";
-import { debounce } from "lodash";
+import { debounce, set } from "lodash";
+import { CircularProgress } from "@mui/material";
 
 import AppContext from "../../contexts/AppContext";
 import RepoList from "../RepoList/RepoList";
@@ -20,6 +21,7 @@ const Home: React.FC = () => {
   const { searchResults, setSearchResults } = context;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSearchInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -30,6 +32,7 @@ const Home: React.FC = () => {
   };
 
   const fetchResults = async (searchValue: string, page: number) => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         `https://api.github.com/search/repositories?q=${searchValue}&page=${page}`,
@@ -39,6 +42,7 @@ const Home: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const debounceFetchResults = useRef(
@@ -61,7 +65,11 @@ const Home: React.FC = () => {
           value={searchValue}
         />
         <h2>Résultats de la recherche</h2>
-        {searchResults.length > 0 ? (
+        {isLoading ? (
+          <div className="loading__wrapper">
+            <CircularProgress />
+          </div>
+        ) : searchResults.length > 0 ? (
           <RepoList
             currentPage={currentPage}
             totalPages={totalPages}

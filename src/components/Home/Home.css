@@ -11,3 +11,9 @@
   max-width: 100%;
   flex: 2;
 }
+
+.loading__wrapper {
+  display: "flex";
+  justify-content: center;
+  padding: 2rem;
+}
