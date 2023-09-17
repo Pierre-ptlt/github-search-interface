@@ -10,7 +10,7 @@ import NavBar from "./components/NavBar/NavBar";
 import { AppProvider } from "./contexts/AppContext";
 import "./App.css";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <AppProvider>
       <Router>

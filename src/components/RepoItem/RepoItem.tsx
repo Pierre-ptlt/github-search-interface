@@ -6,9 +6,10 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarRating from "../StarRating/StarRating";
 import AppContext from "../../contexts/AppContext";
+import { Repo } from "../../types";
 
 interface RepoitemProps {
-  repo: any;
+  repo: Repo;
   isFavoritePage: boolean;
 }
 

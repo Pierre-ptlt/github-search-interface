@@ -1,33 +1,31 @@
-import { fabClasses } from "@mui/material";
-import React, { useState, createContext } from "react";
+import { useState, createContext } from "react";
+import { Repo, Favorite } from "../types";
 
-type AppContextType = {
-  searchResults: any[];
-  setSearchResults: React.Dispatch<React.SetStateAction<any[]>>;
-  favorites: any[];
-  setFavorites: React.Dispatch<React.SetStateAction<any[]>>;
-  addFavorite: (repo: any) => void;
+interface IAppContextType {
+  searchResults: Repo[];
+  setSearchResults: React.Dispatch<React.SetStateAction<Repo[]>>;
+  favorites: Favorite[];
+  setFavorites: React.Dispatch<React.SetStateAction<Favorite[]>>;
+  addFavorite: (repo: Repo) => void;
   removeFavorite: (id: number) => void;
   setFavoriteRating: (repoId: number, rating: number) => void;
-};
+}
 
-type AppProviderProps = {
+interface IAppProviderProps {
   children: React.ReactNode;
-};
+}
 
-const AppContext = createContext<AppContextType | undefined>(
+const AppContext = createContext<IAppContextType | undefined>(
   undefined,
 );
 
 export default AppContext;
 
-export const AppProvider: React.FC<AppProviderProps> = ({
-  children,
-}) => {
-  const [searchResults, setSearchResults] = React.useState<any[]>([]);
-  const [favorites, setFavorites] = React.useState<any[]>([]);
+export const AppProvider = ({ children }: IAppProviderProps) => {
+  const [searchResults, setSearchResults] = useState<Repo[]>([]);
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
 
-  const addFavorite = (repo: any) => {
+  const addFavorite = (repo: Repo) => {
     const newFavorite = {
       ...repo,
       rating: 0,
